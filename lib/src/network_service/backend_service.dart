@@ -1,8 +1,7 @@
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:random_words/random_words.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class BackendService {
   Future<List<Classroom>> fetchData() async {

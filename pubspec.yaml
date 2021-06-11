@@ -37,6 +37,7 @@ dependencies:
   path: ^1.8.0
   http: ^0.13.3
   random_words: ^1.0.2
+  google_fonts: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +48,15 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+
+  #https://flutter.dev/docs/cookbook/design/fonts
+  fonts:
+    - family: Test
+      fonts:
+        - asset: fonts/StintUltraCondensed-Regular.ttf
+    #    - asset: fonts/Roboto-Black.ttf
+
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

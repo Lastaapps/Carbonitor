@@ -1,11 +1,9 @@
-import 'package:carbonitor/src/cubits/period_cubit.dart';
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/extensions/streams/merge_stream.dart';
 import 'package:carbonitor/src/extensions/streams/state_stream.dart';
 import 'package:carbonitor/src/repository/repository.dart';
 import 'package:carbonitor/src/repository/repository_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'measurement_state.dart';
 

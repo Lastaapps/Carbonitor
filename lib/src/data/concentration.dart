@@ -1,5 +1,3 @@
-import 'package:carbonitor/src/data/measurement.dart';
-
 class Concentration {
   final double concentration;
   final int color;
