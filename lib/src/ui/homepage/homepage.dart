@@ -41,6 +41,7 @@ class _HomeWidgetContent extends StatelessWidget {
         title: Text("Home page"),
       ),
       body: Container(
+        color: ac.darkGray,
         child: ListView(
           children: <Widget>[
             ListView.builder(

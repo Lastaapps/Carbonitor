@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
-  AppColors._instanciate();
 
   static final primary = Colors.lightGreenAccent;
   static final background = Colors.black;
   static final surface = Colors.black12;
 
   var white = Color.fromRGBO(255, 255, 255, 100);
+  var gray = Color.fromRGBO(255, 255, 255, 50);
   var red = Color.fromRGBO(232, 0, 0, 100);
   var green = Color.fromRGBO(66, 255, 0, 100);
   var yellow = Color.fromRGBO(255, 214, 0, 100);
