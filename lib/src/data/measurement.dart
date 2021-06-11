@@ -5,6 +5,7 @@ import 'package:timezone/browser.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class Measurement {
+  // UTC time
   final TZDateTime time;
   final double temperature;
   final double signal;
