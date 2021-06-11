@@ -69,11 +69,11 @@ class MeasurementDatabase {
     final endTime = endTimeTemp != null ? endTimeTemp / 1000 : null;
 
     if (startTime != null && endTime != null) {
-      whereQuery += '"time BETWEEN $startTime AND $endTime"';
+      whereQuery += '"time" BETWEEN $startTime AND $endTime';
     } else if (startTime != null && endTime == null) {
-      whereQuery += '"time >= $startTime"';
+      whereQuery += '"time" >= $startTime';
     } else if (startTime == null && endTime != null) {
-      whereQuery += '"time <= $endTime"';
+      whereQuery += '"time" <= $endTime';
     } else {}
 
     final measureStream = database.createQuery(measurementsTable,
@@ -83,25 +83,32 @@ class MeasurementDatabase {
             where: '"id" = ?', whereArgs: ids)
         : database.createQuery(classroomTable);
 
-    final merged = MergeStream([measureStream, classroomStream]);
+    final merged = MergeStream([
+      measureStream.mapToList((row) => row).distinct(),
+      classroomStream.mapToList((row) => row).distinct()
+    ]);
 
     final outputStream =
         StreamController<List<Classroom>>(onCancel: () => merged.close());
 
     merged.stream.then((stream) => stream.listen((objects) {
-          final measures = objects[0] as List<Map<String, Object>>;
-          final classRooms = objects[1] as List<Map<String, Object>>;
+          final measures = objects[0] as List<Map<String, Object?>>;
+          final classRooms = objects[1] as List<Map<String, Object?>>;
 
-          classRooms.map((e) {
+          print("Merging in database $measures $classRooms");
+
+          final mapped = classRooms.map((e) {
             final id = e["id"];
 
             final filtered = List.of([...measures]);
-            measures.retainWhere((element) => element["id"] == id);
+            filtered.retainWhere((element) => element["id"] == id);
             final mapped =
                 filtered.map((e) => Measurement.fromDatabaseMap(e)).toList();
 
             return Classroom.fromDatabaseMap(e, mapped);
           });
+
+          outputStream.add(mapped.toList());
         }));
 
     return outputStream.stream;

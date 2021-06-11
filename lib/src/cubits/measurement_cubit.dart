@@ -19,12 +19,15 @@ abstract class MeasurementCubit extends Cubit<MeasurementState> {
   Future<void> listedToRepo() async {
     await repo.isReady.stream.firstWhere((element) => element == true);
 
-    final stream = await _getStream();
+    final stream = await getStream();
 
     _merged = MergeStream([stream, repo.repoStateStream]);
     (await _merged.stream).listen((objects) {
       final list = objects[0] as List<Classroom>;
       final state = objects[1] as RepositoryState;
+
+      print("Merging in cubit $list $state");
+      print("size ${list.length}");
 
       final isLoading = state.isLoading;
 
@@ -42,7 +45,11 @@ abstract class MeasurementCubit extends Cubit<MeasurementState> {
     _isReady.add(true);
   }
 
-  Future<Stream<List<Classroom>>> _getStream();
+  Future<Stream<List<Classroom>>> getStream();
+
+  Future<void> fetchData() async {
+    await repo.fetchData();
+  }
 
   @override
   Future<void> close() {

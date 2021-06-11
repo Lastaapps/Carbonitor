@@ -9,7 +9,7 @@ class PeriodCubit extends MeasurementCubit {
   PeriodCubit({this.start, this.end});
 
   @override
-  Future<Stream<List<Classroom>>> _getStream() async {
+  Future<Stream<List<Classroom>>> getStream() async {
     return repo.getClasses(start: start, end: end);
   }
 }

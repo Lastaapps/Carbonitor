@@ -21,7 +21,7 @@ class MeasurementRepository {
       _repoStateStreamController.stream;
 
   MeasurementRepository._internal() {
-    print("Initializing DonutRepo");
+    print("Initializing Repo");
 
     _initialize();
   }
@@ -33,8 +33,7 @@ class MeasurementRepository {
   void _initialize() async {
     _database = await MeasurementDatabase.createInstance();
 
-    print("Loading data");
-
+    print("Repo initialized");
     isReady.add(true);
   }
 

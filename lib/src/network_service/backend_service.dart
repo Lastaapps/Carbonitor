@@ -1,23 +1,26 @@
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
-// import 'package:random_words/random_words.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class BackendService {
   Future<List<Classroom>> fetchData() async {
+    print("Fetching from dataset");
+
     var data = List<Classroom>.empty(growable: true);
     var dr = dataset.split(";");
     var sensors = List<String>.empty(growable: true);
-    for (var i = 0; i < dr.length; i + (11 * 5)) {
-      if (!sensors.contains(dr.elementAt(i + 3))) {
-        sensors.add(dr.elementAt(i + 3));
+    for (var i = 0; i < dr.length; i = i + (11 * 5)) {
+      final sensor = dr.elementAt(i + 3);
+
+      if (!sensors.contains(sensor)) {
+        sensors.add(sensor);
         data.add(Classroom(
-            id: sensors.elementAt(i),
-            name: "generateNoun().take(1).first.toString()!",
+            id: sensor,
+            name: sensor,
             measurements: List<Measurement>.empty(growable: true)));
       }
     }
-    for (int i = 2; i < dr.length; i + (11 * 5)) {
+    for (int i = 2; i < dr.length; i = i + (11 * 5)) {
       for (int j = 0; j < data.length; j++) {
         if (data[j].name == dr[i + 1]) {
           data[j].measurements.add(Measurement(
@@ -30,6 +33,9 @@ class BackendService {
         }
       }
     }
+
+    print("Data fetched");
+
     return data;
   }
 

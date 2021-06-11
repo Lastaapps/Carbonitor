@@ -1,4 +1,5 @@
 import 'package:carbonitor/src/cubits/period_cubit.dart';
+import 'package:carbonitor/src/data/classroom.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class TodayCubit extends PeriodCubit {
@@ -12,7 +13,5 @@ class TodayCubit extends PeriodCubit {
   static tz.TZDateTime get _evening => tz.TZDateTime.fromMillisecondsSinceEpoch(
       _zone, _morning.millisecondsSinceEpoch + 24 * 3600 * 1000);
 
-  TodayCubit() : super(start: _morning, end: _evening) {
-    DateTime.now();
-  }
+  TodayCubit() : super(start: _morning, end: _evening);
 }

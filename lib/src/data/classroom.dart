@@ -1,4 +1,5 @@
 import 'package:carbonitor/src/data/measurement.dart';
+import 'package:timezone/timezone.dart';
 
 class Classroom {
   final String id;
@@ -20,6 +21,23 @@ class Classroom {
       : id = map["id"],
         name = map["name"],
         measurements = measurements;
+
+  Measurement latest(TZDateTime? time) {
+    final actualTime = time != null ? time : TZDateTime.now(UTC);
+    final seconds = actualTime.millisecondsSinceEpoch;
+    for (var measurement in measurements.reversed) {
+      if (measurement.time.millisecondsSinceEpoch <= seconds) {
+        return measurement;
+      }
+    }
+    return Measurement(
+        time: TZDateTime.now(UTC),
+        temperature: 0,
+        signal: 0,
+        humidity: 0,
+        carbon: 0,
+        bat: 0);
+  }
 
   @override
   bool operator ==(Object other) =>
