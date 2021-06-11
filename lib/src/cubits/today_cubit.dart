@@ -12,7 +12,7 @@ import 'measurement_state.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
-abstract class TodayCubit extends PeriodCubit {
+class TodayCubit extends PeriodCubit {
   static final _zone = tz.local;
 
   static tz.TZDateTime get _now => tz.TZDateTime.now(_zone);
