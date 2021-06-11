@@ -36,7 +36,7 @@ dependencies:
   sqlbrite: ^2.1.0
   path: ^1.8.0
   http: ^0.13.3
-  random_words: ^1.0.2
+
   google_fonts: ^2.1.0
 
 dev_dependencies:
@@ -51,7 +51,7 @@ flutter:
 
   #https://flutter.dev/docs/cookbook/design/fonts
   fonts:
-    - family: Test
+    - family: Robo
       fonts:
         - asset: fonts/StintUltraCondensed-Regular.ttf
     #    - asset: fonts/Roboto-Black.ttf
