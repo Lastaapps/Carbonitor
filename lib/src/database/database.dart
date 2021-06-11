@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqlbrite/sqlbrite.dart';
-import 'package:timezone/browser.dart';
+import 'package:timezone/timezone.dart';
 
 class MeasurementDatabase {
   final BriteDatabase database;
@@ -115,13 +115,13 @@ Future<Database> _createDatabase() async {
     join(await getDatabasesPath(), '$databaseName.db'),
     onCreate: (db, version) async {
       await db.execute(
-        'CREATE TABLE $measurementsTable(time INTEGER, temp DOUBLE, signal DOUBLE, hum DOUBLE, co2 DOUBLE, bat INTEGER, classId TEXT, PRIMARY KEY (time, classId))',
+        'CREATE TABLE $measurementsTable(time INTEGER, temp REAL, signal REAL, hum REAL, co2 DOUBLE, bat INTEGER, classId TEXT, PRIMARY KEY (time, classId))',
       );
       await db.execute(
         'CREATE TABLE $classroomTable(id TEXT PRIMARY KEY, name TEXT)',
       );
       await db.execute(
-        'CREATE TABLE $lessonTable(start INTEGER, classId TEXT, PRIMARY KEY (start, ClassId))',
+        'CREATE TABLE $lessonTable(start INTEGER, classId TEXT, PRIMARY KEY (start, classId))',
       );
       await db.execute(
         'CREATE TABLE $teacherTable(id TEXT PRIMARY KEY, name TEXT)',

@@ -1,10 +1,11 @@
 import 'package:carbonitor/src/constants/concentrations.dart';
 import 'package:carbonitor/src/constants/time.dart';
 import 'package:carbonitor/src/data/concentration.dart';
-import 'package:timezone/browser.dart';
+import 'package:timezone/standalone.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class Measurement {
+  // UTC time
   final TZDateTime time;
   final double temperature;
   final double signal;
