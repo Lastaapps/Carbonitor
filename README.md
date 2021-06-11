@@ -1,4 +1,4 @@
-# carbonitor2
+# Carbonitor
 
 A new Flutter project.
 
