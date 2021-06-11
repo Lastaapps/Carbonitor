@@ -2,7 +2,6 @@ import 'package:carbonitor/src/constants/concentrations.dart';
 import 'package:carbonitor/src/constants/time.dart';
 import 'package:carbonitor/src/data/concentration.dart';
 import 'package:timezone/browser.dart';
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 class Measurement {
@@ -31,8 +30,9 @@ class Measurement {
     return Concentrations.danger;
   }
 
-  Map<String, dynamic> toDatabaseMap() {
+  Map<String, dynamic> toDatabaseMap(String classId) {
     return {
+      "classId": classId,
       "time": time.millisecondsSinceEpoch / 1000,
       "temp": temperature,
       "signal": signal,
