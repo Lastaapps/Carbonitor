@@ -30,6 +30,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_local_notifications: ^6.0.0
   timezone: ^0.7.0
+  flutter_bloc: ^7.0.1
+  async: ^2.6.1
+  sqflite: ^2.0.0
+  sqlbrite: ^2.1.0
+  path: ^1.8.0
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:

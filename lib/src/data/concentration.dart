@@ -24,8 +24,10 @@ class Concentration {
 
   @override
   int get hashCode =>
-      concentration.hashCode ^ color.hashCode ^ name.hashCode ^ severity.hashCode;
-
+      concentration.hashCode ^
+      color.hashCode ^
+      name.hashCode ^
+      severity.hashCode;
 }
 
 enum ConcentrationDanger { fine, limit, danger }
