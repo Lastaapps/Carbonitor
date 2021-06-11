@@ -1,6 +1,7 @@
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
-import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/standalone.dart' as tz;
+import 'package:timezone/timezone.dart';
 
 class BackendService {
   Future<List<Classroom>> fetchData() async {
@@ -24,7 +25,7 @@ class BackendService {
       for (int j = 0; j < data.length; j++) {
         if (data[j].name == dr[i + 1]) {
           data[j].measurements.add(Measurement(
-              time: tz.TZDateTime.parse(tz.local, dr.elementAt(i - 2)),
+              time: tz.TZDateTime.parse(UTC, dr.elementAt(i - 2)),
               temperature: double.parse(dr.elementAt(i)),
               signal: double.parse(dr.elementAt(i + 11)),
               humidity: double.parse(dr.elementAt(i + (11 * 2))),

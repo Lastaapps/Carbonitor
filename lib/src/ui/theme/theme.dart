@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 ThemeData appTheme(BuildContext context) {
   return ThemeData(
-    primaryColor: AppColors.background,
+    primaryColor: AppColors.primary,
     backgroundColor: AppColors.background,
     buttonTheme: ButtonThemeData(
       buttonColor: AppColors.surface,

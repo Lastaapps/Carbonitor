@@ -1,11 +1,9 @@
 import 'package:carbonitor/src/login/cubit/login_cubit.dart';
-import 'package:carbonitor/src/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({Key? key}) : super(key: key);
-  static var ac = new AppColors();
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +66,6 @@ class _LoginContainer extends StatefulWidget {
 }
 
 class _LoginContainerState extends State<_LoginContainer> {
-  static var ac = new AppColors();
-  final key = GlobalKey<FormState>();
   String userName = "";
   String password = "";
   final LoginState state;
@@ -132,14 +128,13 @@ class _LoginContainerState extends State<_LoginContainer> {
                         width: 140,
                         height: 60,
                         decoration: BoxDecoration(
-                            color: ac.lightGray,
-                            borderRadius: BorderRadius.circular(20)),
+                            color: Colors.black12, borderRadius: BorderRadius.circular(20)),
                         child: Center(
                           child: Text(
                             "Login",
-                            style: TextStyle(fontSize: 20, color: ac.white),
-                            textAlign: TextAlign.center,
-                          ),
+                style: TextStyle(fontSize: 20, color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
                         ),
                       ))
                 ]

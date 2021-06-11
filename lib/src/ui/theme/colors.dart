@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class AppColors {
 
   static final primary = Colors.lightGreenAccent;
-  static final background = Colors.black45;
-  static final surface = Colors.black12;
+  static final background = Color(0xFF000000);
+  static final surface = Color(0xFF333333);
 
   var white = Color.fromRGBO(255, 255, 255, 100);
   var gray = Color.fromRGBO(255, 255, 255, 50);
