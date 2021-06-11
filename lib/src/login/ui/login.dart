@@ -1,20 +1,17 @@
 import 'package:carbonitor/src/login/cubit/login_cubit.dart';
+import 'package:carbonitor/src/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({Key? key}) : super(key: key);
+  static var ac = new AppColors();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Center(
-          child: _CubitProvider(),
-        ),
-      ),
-    );
+
+    return _CubitProvider();
+
   }
 }
 
@@ -71,6 +68,7 @@ class _LoginContainer extends StatefulWidget {
 }
 
 class _LoginContainerState extends State<_LoginContainer> {
+  static var ac = new AppColors();
   final key = GlobalKey<FormState>();
   String userName = "";
   String password = "";
@@ -80,73 +78,74 @@ class _LoginContainerState extends State<_LoginContainer> {
 
   @override
   Widget build(BuildContext context) {
-    final spacing = EdgeInsets.only(top: 8.0, bottom: 8.0);
-    final donutCubit = BlocProvider.of<LoginCubit>(context);
-
-    return Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Center(
-            child: Form(
-                child: Column(
-          children: [
-            Padding(
-              padding: spacing,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Name"),
-                  TextFormField(
-                    decoration:
-                        InputDecoration(hintText: "jara_cimrman", filled: true),
-                    onChanged: (value) {
-                      setState(() {
-                        userName = value;
-                      });
-                    },
+    final loginCubit = BlocProvider.of<LoginCubit>(context);
+    return Scaffold(
+        body: Container(
+            child: Container(
+                child: Column(children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(bottom: 60),
+                    child: Text("Login", style: TextStyle(fontSize: 45)),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: spacing,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Password"),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "top_secret_123",
-                      filled: true,
-                    ),
-                    onChanged: (value) {
-                      setState(() {
-                        password = value;
-                      });
-                    },
-                  )
-                ],
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                donutCubit.handleLoginButton(userName, password);
-              },
-              child: Card(
-                child: SizedBox(
-                  width: 256,
-                  height: 64,
-                  child: Center(
-                    child: Text(
-                      "Login",
-                      style: TextStyle(color: Colors.white, height: 40),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("Name"),
+                        TextFormField(
+                          decoration: InputDecoration(
+                              hintText: "jara_cimrman", filled: true),
+                          onChanged: (value) {
+                            setState(() {
+                              userName = value;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-            ),
-          ],
-        ))));
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text("Password"),
+                        TextFormField(
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            hintText: "top_secret_123",
+                            filled: true,
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              password = value;
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        loginCubit.handleLoginButton(userName, password);
+                      },
+                      child: Container(
+                        width: 140,
+                        height: 60,
+                        decoration: BoxDecoration(
+                            color: ac.lightGray,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Center(
+                          child: Text(
+                            "Login",
+                            style: TextStyle(fontSize: 20, color: ac.white),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ))
+                ]
+                )
+            )
+        )
+    );
   }
 }

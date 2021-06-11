@@ -15,11 +15,11 @@ class MyApp extends StatelessWidget {
     //   home: LoginWidget(),
     // );
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Carbonitor',
       theme: appTheme(context),
       debugShowCheckedModeBanner: false,
       // onGenerateRoute: AppRouter().generateRoute,
-        home: HomeWidget(),
+        home: LoginWidget(),
     );
   }
 }
