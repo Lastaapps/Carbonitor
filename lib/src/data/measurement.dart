@@ -1,6 +1,10 @@
+import 'package:carbonitor/src/constants/concencrations.dart';
+import 'package:carbonitor/src/constants/time.dart';
+import 'package:carbonitor/src/data/concentration.dart';
+import 'package:timezone/browser.dart';
 
 class Measurement {
-  final DateTime time;
+  final TZDateTime time;
   final double temperature;
   final double signal;
   final double humidity;
@@ -8,6 +12,16 @@ class Measurement {
   final int bat;
   
   const Measurement(this.time, this.temperature, this.signal, this.humidity, this.carbon, this.bat);
+
+  TZDateTime toCETTime() => TZDateTime.from(time, CET);
+
+  Concentration toConcentration() {
+    for(var concentration in Concentrations.concentrations) {
+      if (carbon <= concentration.concentration)
+        return concentration;
+    }
+    return Concentrations.danger;
+  }
 
   @override
   bool operator ==(Object other) =>
