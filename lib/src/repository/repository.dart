@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/database/database.dart';
 import 'package:carbonitor/src/extensions/streams/state_stream.dart';
-import 'package:carbonitor/src/network/network_service.dart';
+import 'package:carbonitor/src/network_service/backend_service.dart';
+import 'package:carbonitor/src/repository/new_data_processor.dart';
 import 'package:carbonitor/src/repository/repository_state.dart';
 import 'package:timezone/timezone.dart';
 
@@ -41,8 +42,10 @@ class MeasurementRepository {
     await isReady.stream.firstWhere((element) => element == true);
 
     //TODO handle errors
-    final classrooms = await NetworkService().fetchData();
+    final classrooms = await BackendService().fetchData();
     await _database.insertClasses(classrooms);
+
+    NewDataProcessor.processNewData(classrooms);
   }
 
   Stream<List<Classroom>> getClasses(

@@ -1,6 +1,6 @@
 import 'package:carbonitor/src/data/classroom.dart';
 
-class NetworkService {
+class BackendService {
   //TODO manage dataset
   Future<List<Classroom>> fetchData() async {
     return List.empty();
