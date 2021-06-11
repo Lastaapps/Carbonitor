@@ -1,6 +1,6 @@
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
-import 'package:random_words/random_words.dart';
+// import 'package:random_words/random_words.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class BackendService {
@@ -13,7 +13,7 @@ class BackendService {
         sensors.add(dr.elementAt(i + 3));
         data.add(Classroom(
             id: sensors.elementAt(i),
-            name: generateNoun().take(1).first.toString()!,
+            name: "generateNoun().take(1).first.toString()!",
             measurements: List<Measurement>.empty(growable: true)));
       }
     }
