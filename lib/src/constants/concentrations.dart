@@ -1,10 +1,7 @@
-
-
 import 'package:carbonitor/src/data/concentration.dart';
 
 //TODO resolve colors
 class Concentrations {
-
   Concentrations._init();
 
   static const outside = Concentration(
@@ -42,7 +39,53 @@ class Concentrations {
       color: 0xff000000,
       name: "Get out, fast!",
       severity: ConcentrationDanger.danger);
-
+  static const darkGray = Concentration(
+      concentration: 1000000,
+      color: 0xff515159,
+      name: "Dark Grey",
+      severity: ConcentrationDanger.danger);
+  static const lightGray = Concentration(
+      concentration: 1000000,
+      color: 0xff75757A,
+      name: "Light Gray",
+      severity: ConcentrationDanger.danger);
+  static const gray = Concentration(
+      concentration: 1000000,
+      color: 0xff929297,
+      name: "Gray",
+      severity: ConcentrationDanger.danger);
+  static const white = Concentration(
+      concentration: 1000000,
+      color: 0xFFFFFFFF,
+      name: "White",
+      severity: ConcentrationDanger.danger);
+  static const black = Concentration(
+      concentration: 1000000,
+      color: 0xff000000,
+      name: "Get out, fast!",
+      severity: ConcentrationDanger.danger);
+  static const orange = Concentration(
+      concentration: 1000000,
+      color: 0xffFFA800,
+      name: "Orange",
+      severity: ConcentrationDanger.danger);
+  static const green = Concentration(
+      concentration: 1000000,
+      color: 0xffFFA800,
+      name: "Green",
+      severity: ConcentrationDanger.danger);
+  static const red = Concentration(
+      concentration: 1000000,
+      color: 0xffE80000,
+      name: "Red",
+      severity: ConcentrationDanger.danger);
+  static const yellow = Concentration(
+      concentration: 1000000,
+      color: 0xffFFD600,
+      name: "Yellow",
+      severity: ConcentrationDanger.danger);
   static final concentrations = List.of(
       [outside, indoor, acceptable, tiredness, disruptive, healthRisk, danger]);
+  static final colorTeam = List.of(
+      [darkGray, lightGray, gray, white, black, orange, green, red, yellow]);
 }
