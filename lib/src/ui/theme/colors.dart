@@ -15,6 +15,7 @@ class AppColors {
   var black = Color.fromRGBO(0, 0, 0, 100);
   var lightGray = Color.fromRGBO(196, 196, 196, 50);
   var darkGray = Color.fromRGBO(38, 38, 48, 100);
+  var orange = Color.fromRGBO(255, 168, 0, 100);
 
   AppColors();
 }

@@ -106,6 +106,18 @@ class LessonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color;
+    if (measurement.toPercent() <= 25) {
+      color = ac.green;
+    }
+    else if (measurement.toPercent() <= 50) {
+      color = ac.yellow;
+    }
+    else if (measurement.toPercent() <= 75) {
+      color = ac.orange;
+    } else {
+      color = ac.red;
+    }
     return Container(
       height: 80,
       margin: EdgeInsets.only(bottom: 20, top: 20),
@@ -125,7 +137,7 @@ class LessonWidget extends StatelessWidget {
                   margin:
                   EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
                   decoration: BoxDecoration(
-                    color: ac.green,
+                    color: color,
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Center(

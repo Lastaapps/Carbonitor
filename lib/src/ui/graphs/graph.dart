@@ -4,6 +4,7 @@ import 'package:carbonitor/src/cubits/measurement_state.dart';
 import 'package:carbonitor/src/cubits/period_cubit.dart';
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
+import 'package:carbonitor/src/ui/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 //import 'package:charts_flutter/flutter.dart' as charts;
@@ -105,6 +106,7 @@ class _GraphWaitingWidgetState extends State<_GraphWaitingWidget> {
 
     return DefaultTabController(
         length: 3,
+        initialIndex: 1,
         child: Scaffold(
             appBar: AppBar(
               title: Text(label),
@@ -179,8 +181,8 @@ class BarChartState extends State<BarChartMain> {
 
   BarChartState(this.list, this.mode);
 
-  final Color leftBarColor = const Color(0xff53fdd7);
-  final Color rightBarColor = const Color(0xffff5182);
+  final Color leftBarColor = Color(0xffff5182);
+  final Color rightBarColor = Color(0xff53fdd7);
   final double width = 7;
 
   late List<BarChartGroupData> rawBarGroups;
@@ -216,6 +218,7 @@ class BarChartState extends State<BarChartMain> {
 
   @override
   Widget build(BuildContext context) {
+    var ac = AppColors();
     return AspectRatio(
       aspectRatio: 1,
       child: Card(
@@ -234,19 +237,19 @@ class BarChartState extends State<BarChartMain> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  makeTransactionsIcon(),
+                  // makeTransactionsIcon(),
                   const SizedBox(
                     width: 38,
                   ),
                   const Text(
-                    'Transactions',
+                    '',
                     style: TextStyle(color: Colors.white, fontSize: 22),
                   ),
                   const SizedBox(
                     width: 4,
                   ),
                   const Text(
-                    'state',
+                    '',
                     style: TextStyle(color: Color(0xff77839a), fontSize: 16),
                   ),
                 ],
@@ -349,11 +352,11 @@ class BarChartState extends State<BarChartMain> {
                           reservedSize: 14,
                           getTitles: (value) {
                             if (value == 0) {
-                              return '1K';
+                              return '25%';
                             } else if (value == 10) {
-                              return '5K';
+                              return '50%';
                             } else if (value == 19) {
-                              return '10K';
+                              return '75%';
                             } else {
                               return '';
                             }
@@ -393,53 +396,6 @@ class BarChartState extends State<BarChartMain> {
     ]);
   }
 
-  Widget makeTransactionsIcon() {
-    const width = 4.5;
-    const space = 3.5;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 42,
-          color: Colors.white.withOpacity(1),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 28,
-          color: Colors.white.withOpacity(0.8),
-        ),
-        const SizedBox(
-          width: space,
-        ),
-        Container(
-          width: width,
-          height: 10,
-          color: Colors.white.withOpacity(0.4),
-        ),
-      ],
-    );
-  }
 }
 
 final dayStart = TZDateTime(local, 2020, 9, 21);
