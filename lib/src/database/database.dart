@@ -92,6 +92,7 @@ class MeasurementDatabase {
     final merged = MergeStream([
       measureStream.mapToList((row) => row),
       classroomStream.mapToList((row) => row),
+      getAllMeasurement(),
     ]);
 
     final outputStream =

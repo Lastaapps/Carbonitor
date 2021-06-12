@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:carbonitor/src/constants/concentrations.dart';
 import 'package:carbonitor/src/constants/time.dart';
 import 'package:carbonitor/src/data/concentration.dart';
 import 'package:timezone/standalone.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/timezone.dart';
 
 class Measurement {
   // UTC time
@@ -31,8 +34,8 @@ class Measurement {
     return Concentrations.danger;
   }
 
-  double toPercent() {
-    return carbon / Concentrations.tiredness.concentration * 100;
+  int toPercent() {
+    return (carbon / Concentrations.tiredness.concentration * 100).round();
   }
 
   Map<String, dynamic> toDatabaseMap(String classId) {
@@ -57,6 +60,17 @@ class Measurement {
         carbon = map["co2"],
         bat = map["bat"];
 
+  static Measurement fake() {
+    final random = Random();
+    return Measurement(
+        time: TZDateTime.now(UTC),
+        temperature: random.nextInt(30).toDouble(),
+        signal: -1 * random.nextInt(100).toDouble(),
+        humidity: random.nextInt(100).toDouble(),
+        carbon: random.nextInt(1500).toDouble(),
+        bat: 1);
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -67,7 +81,7 @@ class Measurement {
           signal == other.signal &&
           humidity == other.humidity &&
           carbon == other.carbon &&
-          bat == other.bat;
+              bat == other.bat;
 
   @override
   String toString() {

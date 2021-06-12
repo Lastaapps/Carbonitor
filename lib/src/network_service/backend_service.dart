@@ -21,7 +21,7 @@ class BackendService {
         final random = Random().nextInt(nouns.length - 1);
         data.add(Classroom(
             id: sensor,
-            name: nouns[random].toString(),
+            name: "Classroom no. ${Random().nextInt(50)}",
             measurements: List<Measurement>.empty(growable: true)));
       }
     }

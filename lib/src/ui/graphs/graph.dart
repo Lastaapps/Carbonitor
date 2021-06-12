@@ -1,6 +1,8 @@
 import 'package:carbonitor/src/constants/time.dart';
 import 'package:carbonitor/src/cubits/id_cubit.dart';
 import 'package:carbonitor/src/cubits/measurement_state.dart';
+import 'package:carbonitor/src/cubits/period_cubit.dart';
+import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
 import 'package:flutter/material.dart';
 
@@ -32,13 +34,36 @@ class _GraphBlocState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => IdCubit(id),
-        child:
-        BlocBuilder<IdCubit, MeasurementState>(builder: (context, state) {
+        create: (context) => PeriodCubit(),
+        child: BlocBuilder<PeriodCubit, MeasurementState>(
+            builder: (context, state) {
           return _GraphWaitingWidget(state, key: key);
         }));
   }
 }
+
+final mockData = [
+  Classroom(id: "id", name: "Bilogy", measurements: [
+    Measurement.fake(),
+    Measurement.fake(),
+    Measurement.fake(),
+  ]),
+  Classroom(id: "id", name: "Bilogy", measurements: [
+    Measurement.fake(),
+    Measurement.fake(),
+    Measurement.fake(),
+  ]),
+  Classroom(id: "id", name: "Bilogy", measurements: [
+    Measurement.fake(),
+    Measurement.fake(),
+    Measurement.fake(),
+  ]),
+  Classroom(id: "id", name: "Bilogy", measurements: [
+    Measurement.fake(),
+    Measurement.fake(),
+    Measurement.fake(),
+  ]),
+];
 
 class _GraphWaitingWidget extends StatefulWidget {
   final MeasurementState state;
@@ -75,6 +100,8 @@ class _GraphWaitingWidgetState extends State<_GraphWaitingWidget> {
       );
       label = "Loading...";
     }
+    label = "Class info";
+    widget = _GraphContentWidget(MeasurementData(false, mockData), mode);
 
     return DefaultTabController(
         length: 3,
@@ -88,11 +115,9 @@ class _GraphWaitingWidgetState extends State<_GraphWaitingWidget> {
                   });
                 },
                 tabs: [
-                  Tab(
-                    child: Text("Day"),
-                  ),
+                  Tab(child: Text("Day")),
                   Tab(child: Text("Week")),
-                  Tab(child: Text("Month"))
+                  Tab(child: Text("Month")),
                 ],
               ),
             ),
@@ -124,14 +149,16 @@ class _GraphContentWidget extends StatelessWidget {
         break;
     }
 
-    return TabBarView(
-      children: <Widget>[
-        Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Container(
-              child: BarChartMain(list, mode),
-            )),
-      ],
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(
+          child: TabBarView(
+        children: <Widget>[
+          BarChartMain(list, mode),
+          BarChartMain(list, mode),
+          BarChartMain(list, mode),
+        ],
+      )),
     );
   }
 }

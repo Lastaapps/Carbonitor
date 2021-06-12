@@ -32,14 +32,7 @@ class Classroom {
     }
     if (measurements.isNotEmpty) return measurements.last;
 
-    final random = Random();
-    return Measurement(
-        time: TZDateTime.now(UTC),
-        temperature: random.nextInt(100).toDouble(),
-        signal: -1 * random.nextInt(100).toDouble(),
-        humidity: random.nextInt(100).toDouble(),
-        carbon: random.nextInt(1000).toDouble(),
-        bat: 1);
+    return Measurement.fake();
   }
 
   @override
