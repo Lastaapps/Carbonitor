@@ -54,7 +54,7 @@ class MeasurementDatabase {
   }
 
   Stream<List<Classroom>> getClassesBy(
-      {List<int>? ids, TZDateTime? start, TZDateTime? end}) {
+      {List<String>? ids, TZDateTime? start, TZDateTime? end}) {
     String whereQuery = "";
     List<Object>? whereArgs;
 

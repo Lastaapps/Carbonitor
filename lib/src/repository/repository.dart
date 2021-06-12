@@ -48,7 +48,7 @@ class MeasurementRepository {
   }
 
   Stream<List<Classroom>> getClasses(
-      {List<int>? ids, TZDateTime? start, TZDateTime? end}) {
+      {List<String>? ids, TZDateTime? start, TZDateTime? end}) {
     return _database.getClassesBy(ids: ids, start: start, end: end);
   }
 }
