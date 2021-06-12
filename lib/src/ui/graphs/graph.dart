@@ -1,20 +1,22 @@
+import 'package:carbonitor/src/constants/time.dart';
 import 'package:carbonitor/src/cubits/id_cubit.dart';
 import 'package:carbonitor/src/cubits/measurement_state.dart';
+import 'package:carbonitor/src/data/measurement.dart';
 import 'package:flutter/material.dart';
+
+//import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timezone/timezone.dart';
 
 class GraphWidget extends StatelessWidget {
   const GraphWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as String;
+    final id = ModalRoute.of(context)!.settings.arguments as String;
 
     return _GraphBlocState(id);
   }
@@ -96,7 +98,7 @@ class _GraphWaitingWidgetState extends State<_GraphWaitingWidget> {
 }
 
 class _GraphContentWidget extends StatelessWidget {
-  final MeasurementState state;
+  final MeasurementData state;
   final int mode;
 
   const _GraphContentWidget(this.state, this.mode, {Key? key})
@@ -104,34 +106,50 @@ class _GraphContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //TODO filter data based on mode
+    final allMeasurements = state.classrooms.first.measurements;
+    List<List<Measurement>> list;
+
+    switch (mode) {
+      case 0:
+        list = toDailyMeasurements(allMeasurements, dayStart, dayEnd, true);
+        break;
+      case 0:
+        list = toDailyMeasurements(allMeasurements, weekStart, weekEnd, false);
+        break;
+      default:
+        list =
+            toDailyMeasurements(allMeasurements, monthStart, monthEnd, false);
+        break;
+    }
 
     return TabBarView(
       children: <Widget>[
         Padding(
             padding: EdgeInsets.all(8.0),
             child: Container(
-              child: Text("mode: $mode"),
-            )
-        ),
-        // Container(
-        //   child: charts.LineChart(
-        //     List.empty(),
-        //     animate: true,
-        //     animationDuration: Duration(seconds: 3),
-        //   ),
-        // ),
+              child: BarChartMain(list, mode),
+            )),
       ],
     );
   }
 }
 
 class BarChartMain extends StatefulWidget {
+  List<List<Measurement>> list;
+  int mode;
+
+  BarChartMain(this.list, this.mode);
+
   @override
-  State<StatefulWidget> createState() => BarChartState();
+  State<StatefulWidget> createState() => BarChartState(list, mode);
 }
 
 class BarChartState extends State<BarChartMain> {
+  List<List<Measurement>> list;
+  int mode;
+
+  BarChartState(this.list, this.mode);
+
   final Color leftBarColor = const Color(0xff53fdd7);
   final Color rightBarColor = const Color(0xffff5182);
   final double width = 7;
@@ -227,7 +245,8 @@ class BarChartState extends State<BarChartMain> {
                               return;
                             }
 
-                            touchedGroupIndex = response.spot!.touchedBarGroupIndex;
+                            touchedGroupIndex =
+                                response.spot!.touchedBarGroupIndex;
 
                             setState(() {
                               if (response.touchInput is PointerExitEvent ||
@@ -238,18 +257,25 @@ class BarChartState extends State<BarChartMain> {
                                 showingBarGroups = List.of(rawBarGroups);
                                 if (touchedGroupIndex != -1) {
                                   var sum = 0.0;
-                                  for (var rod in showingBarGroups[touchedGroupIndex].barRods) {
+                                  for (var rod
+                                      in showingBarGroups[touchedGroupIndex]
+                                          .barRods) {
                                     sum += rod.y;
                                   }
-                                  final avg =
-                                      sum / showingBarGroups[touchedGroupIndex].barRods.length;
+                                  final avg = sum /
+                                      showingBarGroups[touchedGroupIndex]
+                                          .barRods
+                                          .length;
 
                                   showingBarGroups[touchedGroupIndex] =
-                                      showingBarGroups[touchedGroupIndex].copyWith(
-                                        barRods: showingBarGroups[touchedGroupIndex].barRods.map((rod) {
-                                          return rod.copyWith(y: avg);
-                                        }).toList(),
-                                      );
+                                      showingBarGroups[touchedGroupIndex]
+                                          .copyWith(
+                                    barRods: showingBarGroups[touchedGroupIndex]
+                                        .barRods
+                                        .map((rod) {
+                                      return rod.copyWith(y: avg);
+                                    }).toList(),
+                                  );
                                 }
                               }
                             });
@@ -259,7 +285,9 @@ class BarChartState extends State<BarChartMain> {
                         bottomTitles: SideTitles(
                           showTitles: true,
                           getTextStyles: (value) => const TextStyle(
-                              color: Color(0xff7589a2), fontWeight: FontWeight.bold, fontSize: 14),
+                              color: Color(0xff7589a2),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
                           margin: 20,
                           getTitles: (double value) {
                             switch (value.toInt()) {
@@ -285,7 +313,9 @@ class BarChartState extends State<BarChartMain> {
                         leftTitles: SideTitles(
                           showTitles: true,
                           getTextStyles: (value) => const TextStyle(
-                              color: Color(0xff7589a2), fontWeight: FontWeight.bold, fontSize: 14),
+                              color: Color(0xff7589a2),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
                           margin: 32,
                           reservedSize: 14,
                           getTitles: (value) {
@@ -381,4 +411,45 @@ class BarChartState extends State<BarChartMain> {
       ],
     );
   }
+}
+
+final dayStart = TZDateTime(local, 2020, 9, 21);
+final dayEnd = TZDateTime(local, 2020, 9, 22);
+final weekStart = TZDateTime(local, 2020, 9, 21);
+final weekEnd = TZDateTime(local, 2020, 9, 28);
+final monthStart = TZDateTime(local, 2020, 9, 1);
+final monthEnd = TZDateTime(local, 2020, 10, 1);
+
+List<List<Measurement>> toDailyMeasurements(
+    List<Measurement> data, TZDateTime start, TZDateTime end, bool toHours) {
+  final diffDuration =
+      !toHours ? Duration.millisecondsPerDay : Duration.millisecondsPerHour;
+
+  final diff = ((end.millisecondsSinceEpoch - start.millisecondsSinceEpoch) /
+          diffDuration)
+      .round();
+  final allDays = List.of([
+    for (var i = 0; i < diff; i++)
+      TZDateTime.fromMillisecondsSinceEpoch(
+          CET, start.millisecondsSinceEpoch + i * diffDuration),
+    end
+  ]);
+
+  final output = List<List<Measurement>>.generate(
+      diff, (index) => List.empty(growable: true));
+
+  for (var i = 0; i < allDays.length - 1; i++) {
+    final starting = allDays[i];
+    final ending = allDays[i + 1];
+
+    for (var measurement in data) {
+      if (measurement.time.isAfter(starting) &&
+          measurement.time.isBefore(ending)) {
+        final list = output[i];
+        list.add(measurement);
+      }
+    }
+  }
+
+  return output;
 }

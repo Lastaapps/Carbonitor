@@ -115,7 +115,6 @@ class MeasurementDatabase {
   }
 }
 
-//TODO crate database
 Future<Database> _createDatabase() async {
   WidgetsFlutterBinding.ensureInitialized();
   final database = openDatabase(

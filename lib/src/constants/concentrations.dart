@@ -1,6 +1,5 @@
 import 'package:carbonitor/src/data/concentration.dart';
 
-//TODO resolve colors
 class Concentrations {
   Concentrations._init();
 
