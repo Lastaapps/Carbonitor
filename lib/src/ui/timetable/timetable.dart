@@ -69,24 +69,19 @@ class _TimetableData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Timetable"),
-      ),
-      body: Container(
-        color: ac.darkGray,
-        child: ListView(
-          children: <Widget>[
-            ListView.builder(
-                itemCount: state.classrooms.length,
-                padding: EdgeInsets.only(left: 20, right: 20),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Text("Error"); //TODO connect
-                }),
-          ],
+    return Container(
+      color: ac.darkGray,
+      child: ListView(
+        children: <Widget>[
+          ListView.builder(
+              itemCount: state.classrooms.length,
+              padding: EdgeInsets.only(left: 20, right: 20),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Text("Error"); //TODO connect
+              }),
+        ],
         ),
-      ),
     );
   }
 }

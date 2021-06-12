@@ -46,8 +46,6 @@ class _HomeWidgetContent extends StatelessWidget {
     Widget widget;
 
     final dataCubit = BlocProvider.of<TodayCubit>(context);
-    //TODO refresh
-    if (true) dataCubit.fetchData();
 
     print("Resolving state $state");
 
@@ -66,6 +64,13 @@ class _HomeWidgetContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home page"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                dataCubit.fetchData();
+              },
+              icon: Icon(Icons.refresh)),
+        ],
       ),
       body: widget,
       drawer: Drawer(
