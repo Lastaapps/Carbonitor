@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(runner LANGUAGES CXX)
 
-set(BINARY_NAME "carbonitor2")
-set(APPLICATION_ID "com.softllusion.carbonitor2")
+set(BINARY_NAME "carbonitor")
+set(APPLICATION_ID "com.softllusion.carbonitor")
 
 cmake_policy(SET CMP0063 NEW)
 

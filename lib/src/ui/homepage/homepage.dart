@@ -46,7 +46,6 @@ class _HomeWidgetContent extends StatelessWidget {
     Widget widget;
 
     final dataCubit = BlocProvider.of<TodayCubit>(context);
-    if (false) dataCubit.fetchData();
 
     print("Resolving state $state");
 
@@ -65,6 +64,13 @@ class _HomeWidgetContent extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home page"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                dataCubit.fetchData();
+              },
+              icon: Icon(Icons.refresh)),
+        ],
       ),
       body: widget,
       drawer: Drawer(
@@ -226,12 +232,11 @@ class _MeasuredItem extends StatelessWidget {
                           borderRadius: BorderRadius.circular(17),
                         ),
                         child: Center(
-                          child: Text(
-                              "${latest.carbon / Concentrations.tiredness.concentration * 100}% - CO2",
+                          child: Text("${latest.toPercent()}% - CO2",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18,
-                              )), // TODO Code Dynamical,
+                              )),
                         )),
                   ],
                 )
