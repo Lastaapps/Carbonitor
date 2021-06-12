@@ -16,6 +16,7 @@ class GraphWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO not working
     final id = ModalRoute.of(context)!.settings.arguments as String;
 
     return _GraphBlocState(id);
