@@ -3,6 +3,7 @@ import 'package:carbonitor/src/constants/database.dart';
 import 'package:carbonitor/src/constants/router_destinations.dart';
 import 'package:carbonitor/src/cubits/measurement_cubit.dart';
 import 'package:carbonitor/src/cubits/measurement_state.dart';
+import 'package:carbonitor/src/cubits/period_cubit.dart';
 import 'package:carbonitor/src/cubits/today_cubit.dart';
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
@@ -27,8 +28,8 @@ class _HomeWidgetState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => TodayCubit(),
-        child: BlocBuilder<TodayCubit, MeasurementState>(
+        create: (context) => PeriodCubit(),
+        child: BlocBuilder<PeriodCubit, MeasurementState>(
             builder: (context, state) {
           return _HomeWidgetContent(state, key: key);
         }));
@@ -46,7 +47,7 @@ class _HomeWidgetContent extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget widget;
 
-    final dataCubit = BlocProvider.of<TodayCubit>(context);
+    final dataCubit = BlocProvider.of<PeriodCubit>(context);
 
     print("Resolving state $state");
 

@@ -39,6 +39,7 @@ dependencies:
   google_fonts: ^2.1.0
   fl_chart: ^0.36.1
   english_words: ^4.0.0
+  sprintf: ^4.1.0
 
 dev_dependencies:
   flutter_test:
