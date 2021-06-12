@@ -1,3 +1,4 @@
+import 'package:carbonitor/src/constants/time.dart';
 import 'package:carbonitor/src/cubits/period_cubit.dart';
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -5,7 +6,8 @@ import 'package:timezone/timezone.dart' as tz;
 class TodayCubit extends PeriodCubit {
   static final _zone = tz.local;
 
-  static tz.TZDateTime get _now => tz.TZDateTime.now(_zone);
+  static tz.TZDateTime get _now =>
+      tz.TZDateTime(CET, 2020, 9, 21); //tz.TZDateTime.now(_zone);
 
   static tz.TZDateTime get _morning =>
       tz.TZDateTime(_zone, _now.year, _now.month, _now.day, 0, 0, 0);

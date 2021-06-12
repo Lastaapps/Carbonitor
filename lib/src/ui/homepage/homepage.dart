@@ -177,6 +177,17 @@ class _MeasuredItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var color;
+    if (latest.toPercent() <= 25) {
+      color = ac.green;
+    } else if (latest.toPercent() <= 50) {
+      color = ac.yellow;
+    } else if (latest.toPercent() <= 75) {
+      color = Colors.orange;
+    } else {
+      color = ac.red;
+    }
+
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, AppRoutes.graphs, arguments: classroom.id);
@@ -226,7 +237,7 @@ class _MeasuredItem extends StatelessWidget {
                         margin: EdgeInsets.only(
                             left: 10, right: 10, bottom: 10, top: 10),
                         decoration: BoxDecoration(
-                          color: ac.green,
+                          color: color,
                           borderRadius: BorderRadius.circular(17),
                         ),
                         child: Center(

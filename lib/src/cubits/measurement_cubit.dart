@@ -21,7 +21,7 @@ abstract class MeasurementCubit extends Cubit<MeasurementState> {
 
     final stream = await getStream();
 
-    _merged = MergeStream([stream, repo.repoStateStream]);
+    _merged = MergeStream([stream.distinct(), repo.repoStateStream.distinct()]);
     (await _merged.stream).listen((objects) {
       final list = objects[0] as List<Classroom>;
       final state = objects[1] as RepositoryState;

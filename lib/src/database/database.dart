@@ -91,9 +91,9 @@ class MeasurementDatabase {
         : database.createQuery(classroomTable, orderBy: 'name');
 
     final merged = MergeStream([
-      measureStream.mapToList((row) => row),
-      classroomStream.mapToList((row) => row),
-      getAllMeasurement(),
+      measureStream.mapToList((row) => row).distinct(),
+      classroomStream.mapToList((row) => row).distinct(),
+      getAllMeasurement().distinct(),
     ]);
 
     final outputStream =
@@ -119,7 +119,7 @@ class MeasurementDatabase {
           outputStream.add(mapped.toList());
         }));
 
-    return outputStream.stream;
+    return outputStream.stream.distinct();
   }
 }
 

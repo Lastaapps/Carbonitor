@@ -19,5 +19,15 @@ class MeasurementError extends MeasurementState {
 class MeasurementData extends MeasurementState {
   final List<Classroom> classrooms;
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is MeasurementData &&
+          runtimeType == other.runtimeType &&
+          classrooms == other.classrooms;
+
+  @override
+  int get hashCode => classrooms.hashCode;
+
   const MeasurementData(bool isLoading, this.classrooms) : super(isLoading);
 }
