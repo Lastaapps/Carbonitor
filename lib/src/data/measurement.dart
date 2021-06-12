@@ -10,7 +10,7 @@ class Measurement {
   final double temperature;
   final double signal;
   final double humidity;
-  final double carbon;
+  final double carbon; //TODO to ppm
   final double bat;
 
   const Measurement({
@@ -29,6 +29,10 @@ class Measurement {
       if (carbon <= concentration.concentration) return concentration;
     }
     return Concentrations.danger;
+  }
+
+  double toPercent() {
+    return carbon / Concentrations.tiredness.concentration * 100;
   }
 
   Map<String, dynamic> toDatabaseMap(String classId) {

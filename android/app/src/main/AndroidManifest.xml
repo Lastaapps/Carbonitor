@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.softllusion.carbonitor2">
-   <application
-        android:label="carbonitor2"
+    package="com.softllusion.carbonitor">
+
+    <application
+        android:label="carbonitor"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

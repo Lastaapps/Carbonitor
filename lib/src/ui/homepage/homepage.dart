@@ -46,7 +46,8 @@ class _HomeWidgetContent extends StatelessWidget {
     Widget widget;
 
     final dataCubit = BlocProvider.of<TodayCubit>(context);
-    if (false) dataCubit.fetchData();
+    //TODO refresh
+    if (true) dataCubit.fetchData();
 
     print("Resolving state $state");
 
@@ -226,12 +227,11 @@ class _MeasuredItem extends StatelessWidget {
                           borderRadius: BorderRadius.circular(17),
                         ),
                         child: Center(
-                          child: Text(
-                              "${latest.carbon / Concentrations.tiredness.concentration * 100}% - CO2",
+                          child: Text("${latest.toPercent()}% - CO2",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 18,
-                              )), // TODO Code Dynamical,
+                              )),
                         )),
                   ],
                 )
