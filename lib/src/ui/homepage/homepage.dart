@@ -203,7 +203,7 @@ class _MeasuredItem extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 21,
                       ),
-                    ), // TODO Code Dynamical
+                    ),
                     Text(
                       "${latest.time.hour}:${latest.time.minute}",
                       style: TextStyle(
