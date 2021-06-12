@@ -36,7 +36,8 @@ class BackendService {
               signal: double.parse(dr.elementAt(i + 11)),
               humidity: double.parse(dr.elementAt(i + (11 * 2))),
               carbon: double.parse(dr.elementAt(i + (11 * 3))),
-              bat: double.parse(dr.elementAt(i + (11 * 4))));
+              bat: 1 //int.parse(dr.elementAt(i + (11 * 4)))
+              );
           data[j].measurements.add(measurement);
         }
       }

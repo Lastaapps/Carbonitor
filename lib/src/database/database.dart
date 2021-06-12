@@ -21,33 +21,22 @@ class MeasurementDatabase {
   }
 
   Future<void> insertClasses(List<Classroom> classrooms) async {
-    print("Classroms: ${classrooms.length}");
-    for (var classroom in classrooms) {
-      await database.insert(classroomTable, classroom.toDatabaseMap(),
-          conflictAlgorithm: ConflictAlgorithm.replace);
 
-      print("Measures: ${classroom.measurements.length}");
-      for (var measurement in classroom.measurements) {
-        await database.insert(
-            measurementsTable, measurement.toDatabaseMap(classroom.id),
-            conflictAlgorithm: ConflictAlgorithm.replace);
-      }
-    }
-    return;
-
-    var batch = database.batch();
+    print("Inserting ${classrooms.length} classrooms");
 
     for (var classroom in classrooms) {
-      batch.insert(classroomTable, classroom.toDatabaseMap(),
+      database.insert(classroomTable, classroom.toDatabaseMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
 
+      var batch = database.batch();
+      print("Inserting ${classroom.measurements.length} measurements");
       for (var measurement in classroom.measurements) {
         batch.insert(measurementsTable, measurement.toDatabaseMap(classroom.id),
             conflictAlgorithm: ConflictAlgorithm.replace);
       }
+      await batch.commit();
     }
 
-    await batch.commit();
   }
 
   // Future<void> insertMeasurements(List<Measurement> measurements) async {
@@ -117,8 +106,8 @@ class MeasurementDatabase {
           final mapped = classRooms.map((e) {
             final id = e["id"];
 
-            final filtered = List.of([...measures]);
-            filtered.retainWhere((element) => element["id"] == id);
+            final filtered = List.of(measures);
+            filtered.retainWhere((element) => element["classId"] == id);
             final mapped =
                 filtered.map((e) => Measurement.fromDatabaseMap(e)).toList();
 
@@ -138,13 +127,13 @@ Future<Database> _createDatabase() async {
     join(await getDatabasesPath(), '$databaseName.db'),
     onCreate: (db, version) async {
       await db.execute(
-        'CREATE TABLE $measurementsTable(time INTEGER, temp REAL, signal REAL, hum REAL, co2 DOUBLE, bat INTEGER, classId TEXT, PRIMARY KEY (time, classId))',
+        'CREATE TABLE $measurementsTable(key TEXT PRIMARY KEY, time INTEGER, temp REAL, signal REAL, hum REAL, co2 DOUBLE, bat INTEGER, classId TEXT)',
       );
       await db.execute(
         'CREATE TABLE $classroomTable(id TEXT PRIMARY KEY, name TEXT)',
       );
       await db.execute(
-        'CREATE TABLE $lessonTable(start INTEGER, classId TEXT, PRIMARY KEY (start, classId))',
+        'CREATE TABLE $lessonTable(start INTEGER, classId TEXT, PRIMARY KEY (start, classId))', //NOT WORKING KEYS
       );
       await db.execute(
         'CREATE TABLE $teacherTable(id TEXT PRIMARY KEY, name TEXT)',

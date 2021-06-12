@@ -11,7 +11,7 @@ class Measurement {
   final double signal;
   final double humidity;
   final double carbon;
-  final double bat;
+  final int bat;
 
   const Measurement({
     required this.time,
@@ -37,6 +37,7 @@ class Measurement {
 
   Map<String, dynamic> toDatabaseMap(String classId) {
     return {
+      "key": time.toString() + classId + hashCode.toString(),
       "classId": classId,
       "time": time.millisecondsSinceEpoch / 1000,
       "temp": temperature,
