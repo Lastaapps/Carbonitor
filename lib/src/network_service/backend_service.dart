@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:timezone/timezone.dart';
+import 'package:english_words/english_words.dart';
 
 class BackendService {
   Future<List<Classroom>> fetchData() async {
@@ -15,24 +18,26 @@ class BackendService {
 
       if (!sensors.contains(sensor)) {
         sensors.add(sensor);
+        final random = Random().nextInt(nouns.length - 1);
         data.add(Classroom(
             id: sensor,
-            name: sensor,
+            name: nouns[random].toString(),
             measurements: List<Measurement>.empty(growable: true)));
       }
     }
     for (int i = 2; i < dr.length; i = i + (11 * 5)) {
       for (int j = 0; j < data.length; j++) {
-        if (data[j].name == dr[i + 1]) {
-          data[j].measurements.add(Measurement(
-              //TODO
-              // time: tz.TZDateTime.parse(UTC, dr.elementAt(i - 2)),
+        if (data[j].id == dr[i + 1]) {
+          final measurement = Measurement(
+              //TODO parsing
+              //time: tz.TZDateTime.parse(UTC, dr.elementAt(i - 2)),
               time: tz.TZDateTime(UTC, 2020, 9, 20),
               temperature: double.parse(dr.elementAt(i)),
               signal: double.parse(dr.elementAt(i + 11)),
               humidity: double.parse(dr.elementAt(i + (11 * 2))),
               carbon: double.parse(dr.elementAt(i + (11 * 3))),
-              bat: double.parse(dr.elementAt(i + (11 * 4)))));
+              bat: double.parse(dr.elementAt(i + (11 * 4))));
+          data[j].measurements.add(measurement);
         }
       }
     }
@@ -43,7 +48,7 @@ class BackendService {
   }
 
   final dataset = """
-        2020-09-30T23:53:02Z;2020-10-01T01:53:02+02:00;23.7999992370605;/2.2/TCORh2;;;T;dotcontrols_value;temperature;°C;False;
+2020-09-30T23:53:02Z;2020-10-01T01:53:02+02:00;23.7999992370605;/2.2/TCORh2;;;T;dotcontrols_value;temperature;°C;False;
 2020-09-30T23:53:02Z;2020-10-01T01:53:02+02:00;-76;/2.2/TCORh2;;;RSSI;dotcontrols_value;received signal strength indicator;dBm;False;
 2020-09-30T23:53:02Z;2020-10-01T01:53:02+02:00;47.9000015258789;/2.2/TCORh2;;;RH;dotcontrols_value;relative humidity;%;False;
 2020-09-30T23:53:02Z;2020-10-01T01:53:02+02:00;812;/2.2/TCORh2;;;CO2;dotcontrols_value;carbon dioxide;t CO2;False;

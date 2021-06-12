@@ -25,7 +25,10 @@ class Classroom {
   Measurement latest(TZDateTime? time) {
     final actualTime = time != null ? time : TZDateTime.now(UTC);
     final seconds = actualTime.millisecondsSinceEpoch;
+    print("length: ${measurements.length}");
+    print("seconcs: $seconds");
     for (var measurement in measurements.reversed) {
+      print("time: ${measurement.time.millisecondsSinceEpoch}");
       if (measurement.time.millisecondsSinceEpoch <= seconds) {
         return measurement;
       }

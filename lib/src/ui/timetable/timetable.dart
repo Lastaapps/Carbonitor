@@ -1,11 +1,16 @@
+import 'package:carbonitor/src/constants/time.dart';
 import 'package:carbonitor/src/cubits/measurement_cubit.dart';
 import 'package:carbonitor/src/cubits/measurement_state.dart';
+import 'package:carbonitor/src/cubits/period_cubit.dart';
 import 'package:carbonitor/src/cubits/today_cubit.dart';
 import 'package:carbonitor/src/data/classroom.dart';
 import 'package:carbonitor/src/data/measurement.dart';
 import 'package:carbonitor/src/ui/theme/colors.dart';
+import 'package:carbonitor/src/ui/timetable/compute.dart';
+import 'package:carbonitor/src/ui/timetable/dataset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:timezone/standalone.dart';
 
 final ac = new AppColors();
 
@@ -24,8 +29,9 @@ class _TimetableWidgetState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => TodayCubit(),
-        child: BlocBuilder<TodayCubit, MeasurementState>(
+        create: (context) => PeriodCubit(),
+        //PeriodCubit(start: TZDateTime(CET, 2020, 9, 21), end: TZDateTime(CET, 2020, 9, 28) ),
+        child: BlocBuilder<PeriodCubit, MeasurementState>(
             builder: (context, state) {
           return _TimetableContent(state, key: key);
         }));
@@ -69,19 +75,24 @@ class _TimetableData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final now = TZDateTime(CET, 2020, 9, 21, 10, 0);
+    final classrooms =
+        computeClassrooms(state.classrooms, timetableDataset[0], now);
+
     return Container(
       color: ac.darkGray,
       child: ListView(
         children: <Widget>[
           ListView.builder(
-              itemCount: state.classrooms.length,
+              itemCount: classrooms.length,
               padding: EdgeInsets.only(left: 20, right: 20),
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return Text("Error"); //TODO connect
+                final classroom = classrooms[index];
+                return LessonWidget(classroom, classroom.latest(now));
               }),
         ],
-        ),
+      ),
     );
   }
 }
@@ -112,7 +123,7 @@ class LessonWidget extends StatelessWidget {
                   height: 50,
                   width: 50,
                   margin:
-                      EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
+                  EdgeInsets.only(left: 10, right: 10, bottom: 10, top: 10),
                   decoration: BoxDecoration(
                     color: ac.green,
                     borderRadius: BorderRadius.circular(25),

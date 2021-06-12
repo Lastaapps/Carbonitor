@@ -17,7 +17,8 @@ class GraphWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO not working
-    final id = ModalRoute.of(context)!.settings.arguments as String;
+    final id =
+        "/2.2/TCORh4"; //ModalRoute.of(context)!.settings.arguments as String;
 
     return _GraphBlocState(id);
   }
@@ -26,7 +27,7 @@ class GraphWidget extends StatelessWidget {
 class _GraphBlocState extends StatelessWidget {
   final String id;
 
-  const _GraphBlocState(this.id, {Key? key}) : super(key: key);
+  _GraphBlocState(this.id, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class _GraphBlocState extends StatelessWidget {
 class _GraphWaitingWidget extends StatefulWidget {
   final MeasurementState state;
 
-  const _GraphWaitingWidget(this.state, {Key? key}) : super(key: key);
+  _GraphWaitingWidget(this.state, {Key? key}) : super(key: key);
 
   @override
   _GraphWaitingWidgetState createState() => _GraphWaitingWidgetState(state);
@@ -58,10 +59,11 @@ class _GraphWaitingWidgetState extends State<_GraphWaitingWidget> {
   Widget build(BuildContext context) {
     Widget widget;
     String label;
+    final state = this.state;
 
     if (state is MeasurementData) {
-      widget = _GraphContentWidget(state as MeasurementData, mode);
-      label = (state as MeasurementData).classrooms[0].name;
+      widget = _GraphContentWidget(state, mode);
+      label = state.classrooms[0].name;
     } else if (state is MeasurementError) {
       widget = Center(
         child: Text("Error"),
@@ -71,7 +73,7 @@ class _GraphWaitingWidgetState extends State<_GraphWaitingWidget> {
       widget = Center(
         child: CircularProgressIndicator(),
       );
-      label = "Loading";
+      label = "Loading...";
     }
 
     return DefaultTabController(
@@ -102,8 +104,7 @@ class _GraphContentWidget extends StatelessWidget {
   final MeasurementData state;
   final int mode;
 
-  const _GraphContentWidget(this.state, this.mode, {Key? key})
-      : super(key: key);
+  _GraphContentWidget(this.state, this.mode, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

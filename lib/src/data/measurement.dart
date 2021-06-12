@@ -10,7 +10,7 @@ class Measurement {
   final double temperature;
   final double signal;
   final double humidity;
-  final double carbon; //TODO to ppm
+  final double carbon;
   final double bat;
 
   const Measurement({
@@ -67,6 +67,11 @@ class Measurement {
           humidity == other.humidity &&
           carbon == other.carbon &&
           bat == other.bat;
+
+  @override
+  String toString() {
+    return 'Measurement{time: $time, temperature: $temperature, signal: $signal, humidity: $humidity, carbon: $carbon}';
+  }
 
   @override
   int get hashCode =>

@@ -68,6 +68,8 @@ class _HomeWidgetContent extends StatelessWidget {
           IconButton(
               onPressed: () {
                 dataCubit.fetchData();
+                final snackBar = SnackBar(content: Text("Updating..."));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               icon: Icon(Icons.refresh)),
         ],
@@ -119,41 +121,37 @@ class _DataWidget extends StatelessWidget {
       child: ListView(
         //TODO Implement filter
         children: <Widget>[
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-                    height: 60,
-                    width: 60,
-                    color: ac.lightGray,
-                    child: Center(
-                      child: Text(
-                        "Filter:",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    height: 60,
-                    width: 60,
-                    color: ac.lightGray,
-                    child: Center(
-                      child: Text(
-                        "Filter:",
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: Container(
+          //           height: 60,
+          //           width: 60,
+          //           color: ac.lightGray,
+          //           child: Center(
+          //             child: Text(
+          //               "Filter:",
+          //               textAlign: TextAlign.center,
+          //             ),
+          //           ),
+          //         )
+          //     ),
+          //     Expanded(
+          //       child: Container(
+          //           height: 60,
+          //           width: 60,
+          //           color: ac.lightGray,
+          //           child: Center(
+          //             child: Text(
+          //               "Filter:",
+          //               textAlign: TextAlign.center,
+          //             ),
+          //           ),
+          //         )
+          //     ),
+          //   ],
+          // ),
           ListView.builder(
               itemCount: state.classrooms.length,
               padding: EdgeInsets.only(left: 20, right: 20),

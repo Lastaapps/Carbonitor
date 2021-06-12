@@ -21,6 +21,20 @@ class MeasurementDatabase {
   }
 
   Future<void> insertClasses(List<Classroom> classrooms) async {
+    print("Classroms: ${classrooms.length}");
+    for (var classroom in classrooms) {
+      await database.insert(classroomTable, classroom.toDatabaseMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+
+      print("Measures: ${classroom.measurements.length}");
+      for (var measurement in classroom.measurements) {
+        await database.insert(
+            measurementsTable, measurement.toDatabaseMap(classroom.id),
+            conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+    }
+    return;
+
     var batch = database.batch();
 
     for (var classroom in classrooms) {
@@ -59,7 +73,7 @@ class MeasurementDatabase {
     List<Object>? whereArgs;
 
     if (ids != null) {
-      whereQuery += '"id = ? "';
+      whereQuery += '"classId" = ? ';
       whereArgs = ids;
     }
 
@@ -77,15 +91,18 @@ class MeasurementDatabase {
     } else {}
 
     final measureStream = database.createQuery(measurementsTable,
-        where: whereQuery, whereArgs: whereArgs, orderBy: '"time"');
+        where: whereQuery != "" ? whereQuery : null,
+        whereArgs: whereQuery != "" ? whereArgs : null,
+        orderBy: 'time');
+
     final classroomStream = ids != null
         ? database.createQuery(classroomTable,
-            where: '"id" = ?', whereArgs: ids, orderBy: '"name"')
-        : database.createQuery(classroomTable, orderBy: '"name"');
+            where: '"id" = ?', whereArgs: ids, orderBy: 'name')
+        : database.createQuery(classroomTable, orderBy: 'name');
 
     final merged = MergeStream([
-      measureStream.mapToList((row) => row).distinct(),
-      classroomStream.mapToList((row) => row).distinct()
+      measureStream.mapToList((row) => row),
+      classroomStream.mapToList((row) => row),
     ]);
 
     final outputStream =

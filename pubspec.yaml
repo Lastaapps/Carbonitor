@@ -38,6 +38,7 @@ dependencies:
   http: ^0.13.3
   google_fonts: ^2.1.0
   fl_chart: ^0.36.1
+  english_words: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -53,8 +54,8 @@ flutter:
   fonts:
     - family: Robo
       fonts:
-        - asset: fonts/StintUltraCondensed-Regular.ttf
-    #    - asset: fonts/Roboto-Black.ttf
+        #    - asset: fonts/StintUltraCondensed-Regular.ttf
+        - asset: fonts/Roboto-Black.ttf
 
 
 
