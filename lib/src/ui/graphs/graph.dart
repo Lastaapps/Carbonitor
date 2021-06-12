@@ -16,8 +16,8 @@ class GraphWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final id = ModalRoute.of(context)!.settings.arguments as String;
-    final id = "/2.2/TCORh2";
+    //TODO not working
+    final id = ModalRoute.of(context)!.settings.arguments as String;
 
     return _GraphBlocState(id);
   }
@@ -33,7 +33,7 @@ class _GraphBlocState extends StatelessWidget {
     return BlocProvider(
         create: (context) => IdCubit(id),
         child:
-            BlocBuilder<IdCubit, MeasurementState>(builder: (context, state) {
+        BlocBuilder<IdCubit, MeasurementState>(builder: (context, state) {
           return _GraphWaitingWidget(state, key: key);
         }));
   }
