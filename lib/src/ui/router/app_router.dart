@@ -1,5 +1,6 @@
 import 'package:carbonitor/src/constants/router_destinations.dart';
 import 'package:carbonitor/src/login/ui/login.dart';
+import 'package:carbonitor/src/ui/graphs/graph.dart';
 import 'package:carbonitor/src/ui/homepage/homepage.dart';
 import 'package:carbonitor/src/ui/timetable/timetable.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class AppRouter {
       case AppRoutes.home:
         return MaterialPageRoute(builder: (_) => HomeWidget());
       case AppRoutes.graphs:
-        return MaterialPageRoute(builder: (_) => LoginWidget());
+        return MaterialPageRoute(builder: (_) => GraphWidget());
       case AppRoutes.timetable:
         return MaterialPageRoute(builder: (_) => TimetableWidget());
       case AppRoutes.login:

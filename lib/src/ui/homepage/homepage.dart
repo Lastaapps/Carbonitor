@@ -1,4 +1,5 @@
 import 'package:carbonitor/src/constants/concentrations.dart';
+import 'package:carbonitor/src/constants/router_destinations.dart';
 import 'package:carbonitor/src/cubits/measurement_cubit.dart';
 import 'package:carbonitor/src/cubits/measurement_state.dart';
 import 'package:carbonitor/src/cubits/today_cubit.dart';
@@ -45,7 +46,7 @@ class _HomeWidgetContent extends StatelessWidget {
     Widget widget;
 
     final dataCubit = BlocProvider.of<TodayCubit>(context);
-    dataCubit.fetchData();
+    if (false) dataCubit.fetchData();
 
     print("Resolving state $state");
 
@@ -62,10 +63,41 @@ class _HomeWidgetContent extends StatelessWidget {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Home page"),
+      appBar: AppBar(
+        title: Text("Home page"),
+      ),
+      body: widget,
+      drawer: Drawer(
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+              ),
+              child: Text('Where do you wanna go?'),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.popUntil(
+                    context, ModalRoute.withName(AppRoutes.home));
+                Navigator.pushNamed(context, AppRoutes.home);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.padding),
+              title: Text('Timetable'),
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.timetable);
+              },
+            ),
+          ],
         ),
-        body: widget);
+      ),
+    );
   }
 }
 
@@ -91,7 +123,10 @@ class _DataWidget extends StatelessWidget {
                     width: 60,
                     color: ac.lightGray,
                     child: Center(
-                      child: Text("Filter:", textAlign: TextAlign.center,),
+                      child: Text(
+                        "Filter:",
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   )
                 ],
@@ -103,14 +138,16 @@ class _DataWidget extends StatelessWidget {
                     width: 60,
                     color: ac.lightGray,
                     child: Center(
-                      child: Text("Filter:", textAlign: TextAlign.center,),
+                      child: Text(
+                        "Filter:",
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   )
                 ],
               ),
             ],
           ),
-
           ListView.builder(
               itemCount: state.classrooms.length,
               padding: EdgeInsets.only(left: 20, right: 20),
@@ -136,67 +173,72 @@ class _MeasuredItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 120,
-      margin: EdgeInsets.only(bottom: 20, top: 20),
-      padding: EdgeInsets.only(left: 10, right: 10),
-      decoration: BoxDecoration(
-        color: ac.lightGray,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(
-                    classroom.name,
-                    style: TextStyle(
-                      fontSize: 21,
-                    ),
-                  ), // TODO Code Dynamical
-                  Text(
-                    "${latest.time.hour}:${latest.time.minute}",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Container(
-                      height: 60,
-                      width: 100,
-                      margin: EdgeInsets.only(
-                          left: 10, right: 10, bottom: 10, top: 10),
-                      decoration: BoxDecoration(
-                        color: ac.green,
-                        borderRadius: BorderRadius.circular(17),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.graphs, arguments: classroom.id);
+      },
+      child: Container(
+        height: 120,
+        margin: EdgeInsets.only(bottom: 20, top: 20),
+        padding: EdgeInsets.only(left: 10, right: 10),
+        decoration: BoxDecoration(
+          color: ac.lightGray,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Text(
+                      classroom.name,
+                      style: TextStyle(
+                        fontSize: 21,
                       ),
-                      child: Center(
-                        child: Text(
-                            "${latest.carbon / Concentrations.tiredness.concentration * 100}% - CO2",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 18,
-                            )), // TODO Code Dynamical,
-                      )),
-                ],
-              )
-            ],
-          ),
-        ],
+                    ), // TODO Code Dynamical
+                    Text(
+                      "${latest.time.hour}:${latest.time.minute}",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                        height: 60,
+                        width: 100,
+                        margin: EdgeInsets.only(
+                            left: 10, right: 10, bottom: 10, top: 10),
+                        decoration: BoxDecoration(
+                          color: ac.green,
+                          borderRadius: BorderRadius.circular(17),
+                        ),
+                        child: Center(
+                          child: Text(
+                              "${latest.carbon / Concentrations.tiredness.concentration * 100}% - CO2",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 18,
+                              )), // TODO Code Dynamical,
+                        )),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -8,7 +8,7 @@ class TodayCubit extends PeriodCubit {
   static tz.TZDateTime get _now => tz.TZDateTime.now(_zone);
 
   static tz.TZDateTime get _morning =>
-      tz.TZDateTime(_zone, _now.year, _now.month, _now.day);
+      tz.TZDateTime(_zone, _now.year, _now.month, _now.day, 0, 0, 0);
 
   static tz.TZDateTime get _evening => tz.TZDateTime.fromMillisecondsSinceEpoch(
       _zone, _morning.millisecondsSinceEpoch + 24 * 3600 * 1000);

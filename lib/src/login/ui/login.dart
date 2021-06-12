@@ -1,3 +1,4 @@
+import 'package:carbonitor/src/constants/router_destinations.dart';
 import 'package:carbonitor/src/login/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +8,9 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return _CubitProvider();
-
+    return Scaffold(
+      body: _CubitProvider(),
+    );
   }
 }
 
@@ -39,7 +40,7 @@ class _SnackStateWidget extends StatelessWidget {
       listener: (context, state) {
         String? text;
         if (state is LoginSucceed) {
-          //TODO navigation
+          Navigator.pop(context, AppRoutes.home);
           text = "Great success!";
         } else if (state is LoginWrong) {
           text = "Wrong input";
@@ -75,72 +76,72 @@ class _LoginContainerState extends State<_LoginContainer> {
   @override
   Widget build(BuildContext context) {
     final loginCubit = BlocProvider.of<LoginCubit>(context);
-    return Scaffold(
-        body: Container(
+    return Container(
+        child: Container(
             child: Container(
-                child: Column(children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 60),
-                    child: Text("Login", style: TextStyle(fontSize: 45)),
-                  ),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("Name"),
-                        TextFormField(
-                          decoration: InputDecoration(
-                              hintText: "jara_cimrman", filled: true),
-                          onChanged: (value) {
-                            setState(() {
-                              userName = value;
-                            });
-                          },
+                child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(bottom: 60),
+                        child: Text("Login", style: TextStyle(fontSize: 45)),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Name"),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                  hintText: "jara_cimrman", filled: true),
+                              onChanged: (value) {
+                                setState(() {
+                                  userName = value;
+                                });
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text("Password"),
-                        TextFormField(
-                          obscureText: true,
-                          decoration: InputDecoration(
-                            hintText: "top_secret_123",
-                            filled: true,
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              password = value;
-                            });
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        loginCubit.handleLoginButton(userName, password);
-                      },
-                      child: Container(
-                        width: 140,
-                        height: 60,
-                        decoration: BoxDecoration(
-                            color: Colors.black12, borderRadius: BorderRadius.circular(20)),
-                        child: Center(
-                          child: Text(
-                            "Login",
-                style: TextStyle(fontSize: 20, color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
+                      ),
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text("Password"),
+                            TextFormField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                hintText: "top_secret_123",
+                                filled: true,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  password = value;
+                                });
+                              },
+                            )
+                          ],
                         ),
-                      ))
-                ]
-                )
-            )
-        )
-    );
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            loginCubit.handleLoginButton(userName, password);
+                          },
+                          child: Container(
+                            width: 140,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.black12,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Center(
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ))
+                    ])))));
   }
 }

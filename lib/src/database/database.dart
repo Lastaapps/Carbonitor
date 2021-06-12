@@ -77,11 +77,11 @@ class MeasurementDatabase {
     } else {}
 
     final measureStream = database.createQuery(measurementsTable,
-        where: whereQuery, whereArgs: whereArgs);
+        where: whereQuery, whereArgs: whereArgs, orderBy: '"time"');
     final classroomStream = ids != null
         ? database.createQuery(classroomTable,
-            where: '"id" = ?', whereArgs: ids)
-        : database.createQuery(classroomTable);
+            where: '"id" = ?', whereArgs: ids, orderBy: '"name"')
+        : database.createQuery(classroomTable, orderBy: '"name"');
 
     final merged = MergeStream([
       measureStream.mapToList((row) => row).distinct(),
