@@ -1,4 +1,5 @@
 import 'package:carbonitor/src/ui/graphs/graph.dart';
+import 'package:carbonitor/src/ui/router/app_router.dart';
 import 'package:carbonitor/src/ui/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Carbonitor',
       theme: appTheme(context),
       debugShowCheckedModeBanner: false,
-      // onGenerateRoute: AppRouter().generateRoute,
-        home: GraphWidget(),
+      onGenerateRoute: AppRouter().generateRoute,
     );
   }
 }
