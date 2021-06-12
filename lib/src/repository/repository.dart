@@ -44,7 +44,7 @@ class MeasurementRepository {
     final classrooms = await BackendService().fetchData();
     await _database.insertClasses(classrooms);
 
-    NewDataProcessor.processNewData(classrooms);
+    await NewDataProcessor.processNewData(classrooms);
   }
 
   Stream<List<Classroom>> getClasses(

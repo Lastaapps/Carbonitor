@@ -1,9 +1,10 @@
 
+import 'package:carbonitor/src/notifiaction/channels.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationService {
   static final NotificationService _notificationService =
-  NotificationService._internal();
+      NotificationService._internal();
 
   factory NotificationService() {
     return _notificationService;
@@ -13,16 +14,20 @@ class NotificationService {
     _init();
   }
 
-  Future<void> _init() async {
+  Future<void> warn() async {
+    await _init();
 
+    _showNotification("Warning!", "High concentration of CO2", "/",
+        NotificationChannels.cO2warning);
+  }
+
+  Future<void> _init() async {
     final AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('app_icon');
 
     final InitializationSettings initializationSettings =
-    InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: null,
-        macOS: null);
+        InitializationSettings(
+            android: initializationSettingsAndroid, iOS: null, macOS: null);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
   }

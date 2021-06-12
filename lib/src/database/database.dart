@@ -27,16 +27,17 @@ class MeasurementDatabase {
     for (var classroom in classrooms) {
       database.insert(classroomTable, classroom.toDatabaseMap(),
           conflictAlgorithm: ConflictAlgorithm.replace);
+    }
 
-      var batch = database.batch();
+    var batch = database.batch();
+    for (var classroom in classrooms) {
       print("Inserting ${classroom.measurements.length} measurements");
       for (var measurement in classroom.measurements) {
         batch.insert(measurementsTable, measurement.toDatabaseMap(classroom.id),
             conflictAlgorithm: ConflictAlgorithm.replace);
       }
-      await batch.commit();
     }
-
+    await batch.commit();
   }
 
   // Future<void> insertMeasurements(List<Measurement> measurements) async {
