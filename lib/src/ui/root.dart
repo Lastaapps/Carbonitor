@@ -1,9 +1,5 @@
-import 'package:carbonitor/src/constants/router_destinations.dart';
-import 'package:carbonitor/src/login/ui/login.dart';
-import 'package:carbonitor/src/ui/homepage/homepage.dart';
-import 'package:carbonitor/src/ui/router/app_router.dart';
+import 'package:carbonitor/src/ui/graphs/graph.dart';
 import 'package:carbonitor/src/ui/theme/theme.dart';
-import 'package:carbonitor/src/ui/timetable/timetable.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return MaterialApp(
-    //   title: 'Carbonitor',
+    //   title: 'Flutter Demo',
     //   theme: appTheme(context),
     //   debugShowCheckedModeBanner: false,
     //   home: LoginWidget(),
@@ -20,8 +16,8 @@ class MyApp extends StatelessWidget {
       title: 'Carbonitor',
       theme: appTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.home,
-      onGenerateRoute: AppRouter().generateRoute,
+      // onGenerateRoute: AppRouter().generateRoute,
+        home: GraphWidget(),
     );
   }
 }
