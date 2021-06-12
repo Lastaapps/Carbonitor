@@ -79,7 +79,38 @@ class _DataWidget extends StatelessWidget {
     return Container(
       color: ac.darkGray,
       child: ListView(
+        //TODO Implement filter
         children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Container(
+                    height: 60,
+                    width: 60,
+                    color: ac.lightGray,
+                    child: Center(
+                      child: Text("Filter:", textAlign: TextAlign.center,),
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    height: 60,
+                    width: 60,
+                    color: ac.lightGray,
+                    child: Center(
+                      child: Text("Filter:", textAlign: TextAlign.center,),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+
           ListView.builder(
               itemCount: state.classrooms.length,
               padding: EdgeInsets.only(left: 20, right: 20),

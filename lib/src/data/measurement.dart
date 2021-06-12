@@ -11,7 +11,7 @@ class Measurement {
   final double signal;
   final double humidity;
   final double carbon;
-  final int bat;
+  final double bat;
 
   const Measurement({
     required this.time,

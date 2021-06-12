@@ -25,12 +25,14 @@ class BackendService {
       for (int j = 0; j < data.length; j++) {
         if (data[j].name == dr[i + 1]) {
           data[j].measurements.add(Measurement(
-              time: tz.TZDateTime.parse(UTC, dr.elementAt(i - 2)),
+              //TODO
+              // time: tz.TZDateTime.parse(UTC, dr.elementAt(i - 2)),
+              time: tz.TZDateTime(UTC, 2020, 9, 20),
               temperature: double.parse(dr.elementAt(i)),
               signal: double.parse(dr.elementAt(i + 11)),
               humidity: double.parse(dr.elementAt(i + (11 * 2))),
               carbon: double.parse(dr.elementAt(i + (11 * 3))),
-              bat: int.parse(dr.elementAt(i + (11 * 4)))));
+              bat: double.parse(dr.elementAt(i + (11 * 4)))));
         }
       }
     }

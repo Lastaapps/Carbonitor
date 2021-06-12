@@ -1,7 +1,6 @@
 import 'package:carbonitor/src/login/ui/login.dart';
 import 'package:carbonitor/src/ui/homepage/homepage.dart';
 import 'package:carbonitor/src/ui/theme/theme.dart';
-import 'package:carbonitor/src/ui/timetable/timetable.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: appTheme(context),
       debugShowCheckedModeBanner: false,
       // onGenerateRoute: AppRouter().generateRoute,
-        home: LoginWidget(),
+        home: HomeWidget(),
     );
   }
 }
