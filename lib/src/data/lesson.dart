@@ -1,6 +1,10 @@
 class Lesson {
   final DateTime start;
+  late final DateTime end;
   final String classroomId;
 
-  const Lesson({required this.classroomId, required this.start});
+  Lesson({required this.classroomId, required this.start}) {
+    end = start.add(Duration(minutes: 45));
+  }
+
 }
